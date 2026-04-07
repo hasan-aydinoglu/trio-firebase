@@ -15,6 +15,7 @@ import Friends from './screens/Friends';
 import Messages from './screens/Messages';
 import SplashIntro from './screens/SplashIntro';
 import EditProfile from './screens/EditProfile';
+import PrivacyScreen from './screens/PrivacyScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -85,6 +86,7 @@ export default function App() {
         <Stack.Screen name="MainMenu" component={MainMenu} />
         <Stack.Screen name="Friends" component={Friends} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="Privacy" component={PrivacyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

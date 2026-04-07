@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, Switch, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  const toggleNotifications = () => setNotificationsEnabled(!notificationsEnabled);
 
   return (
     <LinearGradient
@@ -16,27 +18,44 @@ export default function SettingsScreen() {
       }
       style={styles.container}
     >
-      <Text style={[styles.header, { color: '#fff' }]}>Settings</Text>
+      <Text style={styles.header}>Settings</Text>
 
       <View style={styles.option}>
         <Text style={styles.label}>Notifications</Text>
-        <Switch value={true} />
+        <Switch
+          value={notificationsEnabled}
+          onValueChange={toggleNotifications}
+          trackColor={{ false: '#767577', true: '#81f5b4' }}
+          thumbColor={notificationsEnabled ? '#38D67A' : '#f4f3f4'}
+        />
       </View>
 
       <View style={styles.option}>
         <Text style={styles.label}>Dark Mode</Text>
-        <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
+        <Switch
+          value={isDarkMode}
+          onValueChange={toggleDarkMode}
+          trackColor={{ false: '#767577', true: '#999' }}
+          thumbColor={isDarkMode ? '#ffffff' : '#f4f3f4'}
+        />
       </View>
 
-      <TouchableOpacity style={[styles.button, isDarkMode && styles.darkButton]}>
+      <TouchableOpacity
+        style={[styles.button, isDarkMode && styles.darkButton]}
+      >
         <Text style={styles.buttonText}>Contact Support</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, isDarkMode && styles.darkButton]}>
+      <TouchableOpacity
+        style={[styles.button, isDarkMode && styles.darkButton]}
+        onPress={() => navigation.navigate('Privacy')}
+      >
         <Text style={styles.buttonText}>Privacy Policy</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, isDarkMode && styles.darkButton]}>
+      <TouchableOpacity
+        style={[styles.button, isDarkMode && styles.darkButton]}
+      >
         <Text style={styles.buttonText}>Log Out</Text>
       </TouchableOpacity>
     </LinearGradient>
@@ -47,12 +66,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    justifyContent: 'center',
   },
   header: {
     fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 30,
     textAlign: 'center',
+    color: '#fff',
   },
   option: {
     flexDirection: 'row',
